@@ -16,6 +16,8 @@ use App\Http\Controllers\Api\backend\DocumentController;
 use App\Http\Controllers\Api\backend\FavorisController;
 use App\Http\Controllers\Api\backend\SubCollectionController;
 use App\Http\Controllers\Api\frontEnd\PageController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -297,6 +299,21 @@ Route::middleware('auth:api', 'localization')->prefix("/dashboard")->group(
         Route::prefix("/commande")->group(
             function () {
                 Route::post('/add', [CommandeController::class, 'addcommande']);
+            }
+        );
+
+        //conversations
+        Route::prefix("/conversations")->group(
+            function () {
+                Route::get('/getAllConversations', [ConversationController::class, 'index']);
+                Route::post('/create', [ConversationController::class, 'store']);
+                Route::post('/read', [ConversationController::class, 'makConversationAsReaded']);
+            }
+        );
+        //messages
+        Route::prefix("/messages")->group(
+            function () {
+                Route::post('/send', [MessageController::class, 'store']);
             }
         );
     }
